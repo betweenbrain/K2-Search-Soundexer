@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5"
+         type="plugin"
+         group="k2"
+         method="upgrade">
+	<name>K2 - Search Soundexer</name>
+	<author>Matt Thomas</author>
+	<creationDate>January 13, 2014</creationDate>
+	<copyright>2013 Matt Thomas</copyright>
+	<license>GPL 2.0</license>
+	<authorEmail>matt@betweenbrain.com</authorEmail>
+	<authorUrl>http://www.betweenbrain.com</authorUrl>
+	<version>1.0</version>
+	<description>PLG_K2_SEARCH_SOUNDEXER_DESC</description>
+	<files>
+		<filename plugin="search_soundexer">search_soundexer.php</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_k2_search_soundexer.ini</language>
+	</languages>
+</install>
