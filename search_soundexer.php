@@ -45,11 +45,21 @@ class plgK2Search_soundexer extends K2Plugin
 	 */
 	function onAfterK2Save(&$row, $isNew)
 	{
+
 		if ($this->app->isAdmin())
 		{
-			if ($this->setSoundexTable())
+			$categories = $this->params->get('categories');
+			if (!is_array($categories))
 			{
-				$this->setSoundex($row);
+				$categories[] = $categories;
+			}
+
+			if (in_array($row->catid, $categories))
+			{
+				if ($this->setSoundexTable())
+				{
+					$this->setSoundex($row);
+				}
 			}
 		}
 	}
