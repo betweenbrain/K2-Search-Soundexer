@@ -30,9 +30,11 @@ class plgK2Search_soundexer extends K2Plugin
 	function __construct(&$subject, $results)
 	{
 		parent::__construct($subject, $results);
-		$this->app = JFactory::getApplication();
-		$this->db  = JFactory::getDbo();
-		$this->log = JLog::getInstance();
+		$this->app    = JFactory::getApplication();
+		$this->db     = JFactory::getDbo();
+		$this->log    = JLog::getInstance();
+		$this->plugin = &JPluginHelper::getPlugin('k2', 'search_soundexer');
+		$this->params = new JParameter($this->plugin->params);
 	}
 
 	/**
