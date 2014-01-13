@@ -9,8 +9,6 @@
  * License    GNU GPL v3 or later
  */
 
-jimport('joomla.error.log');
-
 JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
 
 /**
