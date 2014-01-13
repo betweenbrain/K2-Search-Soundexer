@@ -44,10 +44,6 @@ class plgK2Search_soundexer extends K2Plugin
 		{
 			if ($this->setSoundexTable())
 			{
-				if (!$isNew)
-				{
-					$this->cleanSoundexTable($row->id);
-				}
 				$this->setSoundex($row);
 			}
 		}
