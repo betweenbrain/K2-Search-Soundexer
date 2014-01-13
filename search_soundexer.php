@@ -75,7 +75,6 @@ class plgK2Search_soundexer extends K2Plugin
 				$this->db->setQuery($query);
 				$this->db->query();
 				JFactory::getApplication()->enqueueMessage('Soundexing ' . $part);
-				$this->checkDbError();
 			}
 		}
 
@@ -87,7 +86,6 @@ class plgK2Search_soundexer extends K2Plugin
 					WHERE ' . $this->db->nameQuote('itemId') . '=' . $this->db->Quote($id) . '';
 		$this->db->setQuery($query);
 		$this->db->query();
-		$this->checkDbError();
 
 		return true;
 	}
@@ -107,7 +105,6 @@ class plgK2Search_soundexer extends K2Plugin
 						DEFAULT CHARSET =utf8;";
 		$this->db->setQuery($query);
 		$this->db->query();
-		$this->checkDbError();
 
 		return true;
 	}
