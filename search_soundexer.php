@@ -11,10 +11,13 @@
 
 jimport('joomla.error.log');
 
-// Load the K2 Plugin API
 JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
 
-// Instantiate class for K2 plugin events
+/**
+ * Instantiate class for K2 plugin events
+ *
+ * Class plgK2Search_soundexer
+ */
 class plgK2Search_soundexer extends K2Plugin
 {
 
@@ -33,7 +36,7 @@ class plgK2Search_soundexer extends K2Plugin
 	}
 
 	/**
-	 * Function to Update item's extra_fields_search data with tag names
+	 * Update the #__k2_search_soundex table with any new terms used in K2 titles
 	 *
 	 * @param $row
 	 * @param $isNew
@@ -44,10 +47,6 @@ class plgK2Search_soundexer extends K2Plugin
 		{
 			if ($this->setSoundexTable())
 			{
-				if (!$isNew)
-				{
-					$this->cleanSoundexTable($row->id);
-				}
 				$this->setSoundex($row);
 			}
 		}
@@ -56,7 +55,9 @@ class plgK2Search_soundexer extends K2Plugin
 	/**
 	 * Sets the soundex value of each word of the titles belonging to the items in the designated category
 	 *
-	 * @param $ids
+	 * @param $row
+	 *
+	 * @internal param $ids
 	 */
 	private function setSoundex($row)
 	{
@@ -79,26 +80,20 @@ class plgK2Search_soundexer extends K2Plugin
 				$this->db->setQuery($query);
 				$this->db->query();
 				JFactory::getApplication()->enqueueMessage('Soundexing ' . $part);
-				$this->checkDbError();
 			}
 		}
 
 	}
 
-	private function cleanSoundexTable($id)
-	{
-		$query = 'DELETE FROM ' . $this->db->nameQuote('#__k2_search_soundex') . '
-					WHERE ' . $this->db->nameQuote('itemId') . '=' . $this->db->Quote($id) . '';
-		$this->db->setQuery($query);
-		$this->db->query();
-		$this->checkDbError();
-
-		return true;
-	}
-
+	/**
+	 * Creates the #__k2_search_soundex table if it doesn't already exist
+	 *
+	 * @return bool
+	 */
 	private function setSoundexTable()
 	{
-		$query = "CREATE TABLE IF NOT EXISTS `jos_k2_search_soundex` (
+		$prefix = $this->app->getCfg('dbprefix');
+		$query  = 'CREATE TABLE IF NOT EXISTS `' . $prefix . 'k2_search_soundex` (
 						`id`           INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 						`itemId`       INT(11)          NOT NULL,
 						`word`         varchar(64)      NOT NULL,
@@ -108,32 +103,10 @@ class plgK2Search_soundexer extends K2Plugin
 					)
 						ENGINE =MyISAM
 						AUTO_INCREMENT =0
-						DEFAULT CHARSET =utf8;";
+						DEFAULT CHARSET =utf8;';
 		$this->db->setQuery($query);
 		$this->db->query();
-		$this->checkDbError();
 
 		return true;
 	}
-
-	/**
-	 * Checks for any database errors after running a query
-	 *
-	 * @param null $backtrace
-	 */
-	private function checkDbError($backtrace = null)
-	{
-		if ($error = $this->db->getErrorMsg())
-		{
-			if ($backtrace)
-			{
-				$e = new Exception();
-				$error .= "\n" . $e->getTraceAsString();
-			}
-
-			$this->log->addEntry(array('LEVEL' => '1', 'STATUS' => 'Database Error:', 'COMMENT' => $error));
-			JError::raiseWarning(100, $error);
-		}
-	}
-
 }
