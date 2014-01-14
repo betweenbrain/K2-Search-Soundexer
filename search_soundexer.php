@@ -49,7 +49,7 @@ class plgK2Search_soundexer extends K2Plugin
 			$categories = $this->params->get('categories');
 			if (!is_array($categories))
 			{
-				$categories[] = $categories;
+				$categories = array($categories);
 			}
 
 			if (in_array($row->catid, $categories))
