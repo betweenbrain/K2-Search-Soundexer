@@ -18,7 +18,7 @@
 	<languages>
 		<language tag="en-GB">en-GB.plg_k2_search_soundexer.ini</language>
 	</languages>
-	<params addpath="/plugins/system/librarybrain/elements/k2">
+	<params addpath="/administrator/components/com_k2/elements">
 		<param name="categories"
 		       type="categoriesmultiple"
 		       default="0"
